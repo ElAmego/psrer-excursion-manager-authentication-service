@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: "el.amegoal@gmail.com"
+      changes:
+        - createIndex:
+            tableName: users
+            indexName: idx_users_login
+            columns:
+              - column:
+                  name: login
+        - createIndex:
+            tableName: users
+            indexName: idx_users_is_active_role
+            columns:
+              - column:
+                  name: is_active
+              - column:
+                  name: user_role

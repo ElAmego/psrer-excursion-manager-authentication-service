@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: "el.amegoal@gmail.com"
+      changes:
+        - createTable:
+            tableName: audit_logs
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_audit_logs
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_audit_logs_users
+                    references: users(id)
+                    deleteCascade: true
+              - column:
+                  name: action
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: details
+                  type: JSONB
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
