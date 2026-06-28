@@ -1,0 +1,27 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+jwt:
+  key-path:
+    private-key: classpath:keys/private.pem
+    public-key: classpath:keys/public.pem
+  access-token:
+    expiration: 900000
+  refresh-token:
+      expiration: 604800000
+
+app:
+  default-admin:
+    login: ${DEFAULT_ADMIN_LOGIN}
+    password: ${DEFAULT_ADMIN_PASSWORD}
