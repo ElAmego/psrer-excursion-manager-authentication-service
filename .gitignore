@@ -6,7 +6,8 @@ target/
 
 ### IntelliJ IDEA ###
 .idea/
-.keys/
+*.pem
+src/main/resources/keys/
 .env
 *.iws
 *.iml
