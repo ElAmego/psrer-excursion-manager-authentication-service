@@ -23,9 +23,9 @@ import org.zapovednik.authservice.model.entity.User;
 import org.zapovednik.authservice.model.entity.type.UserRole;
 import org.zapovednik.authservice.model.mapper.UserMapper;
 import org.zapovednik.authservice.model.repository.UserRepository;
+import org.zapovednik.authservice.security.JwtService;
 import org.zapovednik.authservice.service.AuditLogService;
 import org.zapovednik.authservice.service.AuthenticationService;
-import org.zapovednik.authservice.service.JwtService;
 import org.zapovednik.authservice.service.RefreshTokenService;
 
 @Service

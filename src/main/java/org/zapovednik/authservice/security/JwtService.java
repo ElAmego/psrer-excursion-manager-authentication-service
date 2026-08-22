@@ -1,4 +1,4 @@
-package org.zapovednik.authservice.service.impl;
+package org.zapovednik.authservice.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -14,10 +14,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.zapovednik.authservice.model.entity.type.UserRole;
-import org.zapovednik.authservice.service.JwtService;
 
 @Service
-public class JwtServiceImpl implements JwtService {
+public class JwtService {
 
     private final RSAPrivateKey privateKey;
     private final RSAPublicKey publicKey;
@@ -25,7 +24,7 @@ public class JwtServiceImpl implements JwtService {
     @Value("${jwt.access-token.expiration}")
     private long accessTokenExpiration;
 
-    public JwtServiceImpl(
+    public JwtService(
             @Value("${jwt.key-path.private-key}") final Resource privateKeyPath,
             @Value("${jwt.key-path.public-key}") final Resource publicKeyPath
     ) throws Exception {
@@ -33,7 +32,6 @@ public class JwtServiceImpl implements JwtService {
         this.publicKey = loadPublicKey(publicKeyPath);
     }
 
-    @Override
     public String generateAccessToken(final Long userId, final String login, final UserRole userRole) {
         return Jwts.builder()
                 .subject(login)
@@ -45,12 +43,10 @@ public class JwtServiceImpl implements JwtService {
                 .compact();
     }
 
-    @Override
     public String extractLogin(final String token) {
         return extractAllClaims(token).getSubject();
     }
 
-    @Override
     public boolean isTokenValid(final String token, final UserDetails userDetails) {
         final String login = extractLogin(token);
         return login.equals(userDetails.getUsername()) && !isTokenExpired(token);

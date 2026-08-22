@@ -14,7 +14,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.zapovednik.authservice.constant.HttpConstant;
-import org.zapovednik.authservice.service.JwtService;
 import org.zapovednik.authservice.service.impl.UserDetailsServiceImpl;
 
 @Component
