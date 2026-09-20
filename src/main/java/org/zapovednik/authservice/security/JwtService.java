@@ -17,7 +17,6 @@ import org.zapovednik.authservice.model.entity.type.UserRole;
 
 @Service
 public class JwtService {
-
     private final RSAPrivateKey privateKey;
     private final RSAPublicKey publicKey;
 
@@ -49,11 +48,16 @@ public class JwtService {
 
     public boolean isTokenValid(final String token, final UserDetails userDetails) {
         final String login = extractLogin(token);
+
         return login.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(final String token) {
         return extractAllClaims(token).getExpiration().before(new Date());
+    }
+
+    public Long extractUserId(final String token) {
+        return extractAllClaims(token).get("userId", Long.class);
     }
 
     private Claims extractAllClaims(final String token) {
@@ -71,6 +75,7 @@ public class JwtService {
                 .replaceAll("\\s", "");
         final byte[] keyBytes = Base64.getDecoder().decode(key);
         final KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+
         return (RSAPrivateKey) keyFactory.generatePrivate(new PKCS8EncodedKeySpec(keyBytes));
     }
 
@@ -81,6 +86,7 @@ public class JwtService {
                 .replaceAll("\\s", "");
         final byte[] keyBytes = Base64.getDecoder().decode(key);
         final KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+
         return (RSAPublicKey) keyFactory.generatePublic(new X509EncodedKeySpec(keyBytes));
     }
 }

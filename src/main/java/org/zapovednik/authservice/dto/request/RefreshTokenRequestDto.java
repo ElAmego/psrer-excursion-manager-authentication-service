@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RefreshTokenRequestDto {
 
-    @NotEmpty(message = "refreshToken is required")
+    @NotEmpty(message = "Refresh token is required")
     private String refreshToken;
 }

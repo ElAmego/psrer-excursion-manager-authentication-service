@@ -1,4 +1,4 @@
-package org.zapovednik.authservice.service.impl;
+package org.zapovednik.authservice.security;
 
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

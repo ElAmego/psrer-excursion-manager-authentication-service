@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.zapovednik.authservice.constant.ApiPathConstant;
+import org.zapovednik.authservice.configuration.constant.ApiPathConstant;
 import org.zapovednik.authservice.model.entity.type.UserRole;
 import org.zapovednik.authservice.security.JwtAuthenticationEntryPoint;
 import org.zapovednik.authservice.security.JwtAuthenticationFilter;

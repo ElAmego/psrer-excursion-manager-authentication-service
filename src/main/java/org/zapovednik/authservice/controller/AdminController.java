@@ -12,35 +12,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.zapovednik.authservice.dto.request.RegisterRequestDto;
-import org.zapovednik.authservice.dto.response.AuditLogResponseDto;
 import org.zapovednik.authservice.dto.response.UserResponseDto;
-import org.zapovednik.authservice.service.AuditLogService;
 import org.zapovednik.authservice.service.AuthenticationService;
 import org.zapovednik.authservice.service.UserService;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api/admin/authentication")
 @RequiredArgsConstructor
 public class AdminController {
-
     private final AuthenticationService authenticationService;
-    private final AuditLogService auditLogService;
     private final UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponseDto> register(@Valid @RequestBody final RegisterRequestDto registerRequestDto) {
-        final Long adminId = userService.getCurrentUser().getId();
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(authenticationService.register(registerRequestDto, adminId));
-    }
+    public ResponseEntity<Long> register(@Valid @RequestBody final RegisterRequestDto requestDto) {
+        final Long userId = authenticationService.register(requestDto);
 
-    @GetMapping("/logs")
-    public ResponseEntity<Page<AuditLogResponseDto>> getLogs(final Pageable pageable) {
-        return ResponseEntity.ok(auditLogService.findAll(pageable));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userId);
     }
 
     @GetMapping("/users")
     public ResponseEntity<Page<UserResponseDto>> getUsers(final Pageable pageable) {
-        return ResponseEntity.ok(userService.findAll(pageable));
+        final Page<UserResponseDto> responseDtoList = userService.findAll(pageable);
+
+        return ResponseEntity.ok(responseDtoList);
     }
 }

@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginRequestDto {
 
-    @NotEmpty(message = "login is required")
-    @Size(max = 50, message = "login mustn't exceed 50 characters")
+    @NotEmpty(message = "Login is required")
+    @Size(max = 50, message = "Login must not exceed 50 characters")
     private String login;
 
-    @NotEmpty(message = "password is required")
+    @NotEmpty(message = "Password is required")
     private String password;
 }
