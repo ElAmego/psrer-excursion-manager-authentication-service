@@ -13,7 +13,6 @@ import org.zapovednik.authservice.model.repository.UserRepository;
 @Component
 @RequiredArgsConstructor
 public class DefaultAdminInitializer implements CommandLineRunner {
-
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -32,6 +31,7 @@ public class DefaultAdminInitializer implements CommandLineRunner {
                     .userRole(UserRole.ADMIN)
                     .isActive(true)
                     .build();
+
             userRepository.save(admin);
         }
     }
