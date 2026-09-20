@@ -12,14 +12,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegisterRequestDto {
 
-    @NotEmpty(message = "login is required")
-    @Size(max = 50, message = "login mustn't exceed 50 characters")
+    @NotEmpty(message = "Login is required")
+    @Size(max = 50, message = "login must not exceed 50 characters")
     private String login;
 
-    @NotEmpty(message = "password is required")
+    @NotEmpty(message = "Password is required")
     private String password;
 
-    @NotEmpty(message = "userRole is required")
-    @Pattern(regexp = "USER|ADMIN", message = "userRole must be USER or ADMIN")
+    @NotEmpty(message = "User role is required")
+    @Pattern(regexp = "USER|ADMIN", message = "User role must be USER or ADMIN")
     private String userRole;
 }
