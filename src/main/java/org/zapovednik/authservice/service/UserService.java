@@ -2,11 +2,10 @@ package org.zapovednik.authservice.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.zapovednik.authservice.dto.response.UserResponseDto;
-import org.zapovednik.authservice.model.entity.User;
 
 public interface UserService {
-    User findByLogin(final String login);
-    User getCurrentUser();
+    UserResponseDto validate(final Authentication authentication);
     Page<UserResponseDto> findAll(final Pageable pageable);
 }

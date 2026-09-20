@@ -1,12 +1,11 @@
 package org.zapovednik.authservice.service.impl;
 
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.zapovednik.authservice.dto.response.UserResponseDto;
 import org.zapovednik.authservice.exception.custom.UserNotFoundException;
 import org.zapovednik.authservice.model.entity.User;
@@ -21,23 +20,24 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
-    public User findByLogin(final String login) {
-        final Optional<User> userOptional = userRepository.findByLogin(login);
+    @Transactional(readOnly = true)
+    public UserResponseDto validate(final Authentication authentication) {
+        final String login = authentication.getName();
+        final String role = authentication.getAuthorities().iterator().next().getAuthority();
 
-        if (userOptional.isEmpty()) {
-            throw new UserNotFoundException("User not found: " + login);
-        }
+        final User user = userRepository.findByLogin(login)
+                .orElseThrow(() -> new UserNotFoundException("User not found: " + login));
 
-        return userOptional.get();
+        return UserResponseDto.builder()
+                .id(user.getId())
+                .login(user.getLogin())
+                .userRole(role != null ? role.replace("ROLE_", "") : null)
+                .isActive(true)
+                .build();
     }
 
     @Override
-    public User getCurrentUser() {
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return findByLogin(authentication.getName());
-    }
-
-    @Override
+    @Transactional(readOnly = true)
     public Page<UserResponseDto> findAll(final Pageable pageable) {
         return userRepository.findAll(pageable)
                 .map(userMapper::toDto);
