@@ -1,4 +1,4 @@
-package org.zapovednik.authservice.constant;
+package org.zapovednik.authservice.configuration.constant;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
